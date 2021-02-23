@@ -2,11 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5</TargetFramework>
+    <UserSecretsId>162f50e4-3123-4331-936f-7ab8218df6ac</UserSecretsId>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />

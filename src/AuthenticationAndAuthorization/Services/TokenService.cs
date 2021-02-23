@@ -1,25 +1,25 @@
-﻿using System;
+﻿using AuthenticationAndAuthorization.Models;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using AuthenticationAndAuthorization.Models;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 
 namespace AuthenticationAndAuthorization.Services
 {
     public class TokenService
     {
-        private readonly IConfiguration _configuration;
+        private readonly TokenConfigure _configuration;
         private const double ExpireHours = 1.0;
 
-        public TokenService(IConfiguration configuration)
+        public TokenService(IOptions<TokenConfigure> options)
         {
-            _configuration = configuration;
+            _configuration = options.Value;
         }
-        public static string CreateToken(User user)
+        public string CreateToken(User user)
         {
-            var key = Encoding.ASCII.GetBytes("");
+            var key = Encoding.ASCII.GetBytes(_configuration.Key);
             var tokenHandler = new JwtSecurityTokenHandler();
             var descriptor = new SecurityTokenDescriptor
             {
