@@ -1,4 +1,3 @@
-using System.Text;
 using AuthenticationAndAuthorization.Models;
 using AuthenticationAndAuthorization.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -8,6 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System;
+using System.Text;
 
 namespace AuthenticationAndAuthorization
 {
@@ -27,15 +29,34 @@ namespace AuthenticationAndAuthorization
 
             services.Configure<TokenConfigure>(Configuration.GetSection(nameof(TokenConfigure)));
 
-            services.AddSwaggerGen(c=>
-                c.SwaggerDoc("v1", new Microsoft
-                .OpenApi
-                .Models
-                .OpenApiInfo
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                    {
+                        Title = "SimpleAuthentication",
+                        Version = "v1"
+                    });
+
+                var securityScheme = new OpenApiSecurityScheme
                 {
-                    Title = "SimpleAuthentication",
-                    Version = "v1"
-                }));
+                    Name = "Authorization",
+                    Description = "Enter JWT Bearer authorisation token",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer", 
+                    BearerFormat = "Bearer {token}",
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+                c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, securityScheme);
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    { securityScheme, Array.Empty<string>() }
+                });
+            });
 
             var key = Encoding.ASCII.GetBytes(Configuration.GetSection(nameof(TokenConfigure))["key"]);
             services.AddAuthentication(x =>
