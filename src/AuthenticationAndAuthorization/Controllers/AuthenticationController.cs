@@ -17,7 +17,7 @@ namespace AuthenticationAndAuthorization.Controllers
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        public ActionResult<dynamic> Authenticate([FromBody] User model)
+        public ActionResult<dynamic> Authenticate([FromBody] UserInput model)
         {
             var user = UserRepository.Get(model.Username, model.Password);
 

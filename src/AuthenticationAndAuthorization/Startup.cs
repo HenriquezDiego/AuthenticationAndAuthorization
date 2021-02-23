@@ -1,5 +1,6 @@
 using System.Text;
 using AuthenticationAndAuthorization.Models;
+using AuthenticationAndAuthorization.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -55,6 +56,8 @@ namespace AuthenticationAndAuthorization
                     };
 
                 });
+
+            services.AddScoped<ITokenService,TokenService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

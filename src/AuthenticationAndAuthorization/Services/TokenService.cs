@@ -8,7 +8,7 @@ using System.Text;
 
 namespace AuthenticationAndAuthorization.Services
 {
-    public class TokenService
+    public class TokenService : ITokenService
     {
         private readonly TokenConfigure _configuration;
         private const double ExpireHours = 1.0;
