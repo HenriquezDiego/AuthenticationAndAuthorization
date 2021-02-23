@@ -31,5 +31,14 @@ namespace AuthenticationAndAuthorization.Controllers
                 user, token
             };
         }
+
+
+        [Authorize]
+        [HttpGet]
+        [Route("Auth")]
+        public IActionResult GetAuth()
+        {
+            return Ok("Auth");
+        }
     }
 }
