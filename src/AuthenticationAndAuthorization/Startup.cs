@@ -25,7 +25,16 @@ namespace AuthenticationAndAuthorization
             services.AddControllers(c=>c.EnableEndpointRouting = false);
 
             services.Configure<TokenConfigure>(Configuration.GetSection(nameof(TokenConfigure)));
-            
+
+            services.AddSwaggerGen(c=>
+                c.SwaggerDoc("v1", new Microsoft
+                .OpenApi
+                .Models
+                .OpenApiInfo
+                {
+                    Title = "SimpleAuthentication",
+                    Version = "v1"
+                }));
 
             var key = Encoding.ASCII.GetBytes(Configuration.GetSection(nameof(TokenConfigure))["key"]);
             services.AddAuthentication(x =>
@@ -61,7 +70,11 @@ namespace AuthenticationAndAuthorization
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "SimpleAuthentication");
+            });
             app.UseMvc();
         }
     }
