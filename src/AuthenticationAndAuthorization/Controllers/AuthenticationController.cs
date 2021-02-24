@@ -35,10 +35,26 @@ namespace AuthenticationAndAuthorization.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("Auth")]
+        [Route("auth")]
         public IActionResult GetAuth()
         {
-            return Ok("Auth");
+            return Ok($"Authenticated - {User.Identity.Name}");
+        }
+        
+        [HttpGet]
+        [Route("anonymous")]
+        [AllowAnonymous]
+        public IActionResult Anonymous()
+        {
+            return Ok("You are Anonymous");
+        }
+        
+        [HttpGet]
+        [Route("tester")]
+        [Authorize(Roles = "tester")]
+        public IActionResult Tester()
+        {
+            return Ok($"{User.Identity.Name}");
         }
     }
 }
