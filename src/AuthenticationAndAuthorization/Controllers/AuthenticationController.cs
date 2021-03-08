@@ -21,14 +21,13 @@ namespace AuthenticationAndAuthorization.Controllers
         {
             var user = UserRepository.Get(model.Username, model.Password);
 
-            if (user == null)
-                return NotFound(new { message = "User or password invalid" });
-
+            if (user == null) return NotFound(new { message = "User or password invalid" });
             var token = _tokenService.CreateToken(user);
             user.Password = "";
             return new
             {
-                user, token
+                user, 
+                token
             };
         }
 

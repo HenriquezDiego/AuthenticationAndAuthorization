@@ -11,12 +11,13 @@ namespace AuthenticationAndAuthorization.DataAccess.Repositories
         {
             var users = new List<User>
             {
-                new() {Id = 1, Username = "goku", Password = "goku", Role = "manager"},
-                new() {Id = 2, Username = "vejeta", Password = "vejeta", Role = "employee"},
-                new() {Id = 3, Username = "kuririn", Password = "kuririn", Role = "tester"}
+                new() {Id = 1, Username = "ale", Password = "catolica10", Role = "manager"},
+                new() {Id = 2, Username = "juanPerez", Password = "juan", Role = "employee"},
+                new() {Id = 3, Username = "jose", Password = "jose", Role = "tester"}
             };
 
-            return users.FirstOrDefault(x => string.Equals(x.Username, username, StringComparison.CurrentCultureIgnoreCase) 
+            return users.FirstOrDefault(x => string.Equals(x.Username, username, 
+                                                 StringComparison.CurrentCultureIgnoreCase) 
                                              && x.Password == password);
         }
     }
