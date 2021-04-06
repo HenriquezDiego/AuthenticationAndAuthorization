@@ -11,9 +11,9 @@ namespace AuthenticationAndAuthorization.DataAccess.Repositories
         {
             var users = new List<User>
             {
-                new() {Id = 1, Username = "ale", Password = "catolica10", Role = "manager"},
-                new() {Id = 2, Username = "juanPerez", Password = "juan", Role = "employee"},
-                new() {Id = 3, Username = "jose", Password = "jose", Role = "tester"}
+                new() {Id = 1, Username = "ale", Password = "password", Role = "manager"},
+                new() {Id = 2, Username = "juanPerez", Password = "password", Role = "employee"},
+                new() {Id = 3, Username = "jose", Password = "password", Role = "tester"}
             };
 
             return users.FirstOrDefault(x => string.Equals(x.Username, username, 
