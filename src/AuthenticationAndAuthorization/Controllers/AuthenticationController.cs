@@ -30,7 +30,14 @@ namespace AuthenticationAndAuthorization.Controllers
                 token
             };
         }
-
+ 
+        [HttpGet]
+        [Route("anonymous")]
+        [AllowAnonymous]
+        public IActionResult Anonymous()
+        {
+            return Ok("You are Anonymous");
+        }
 
         [Authorize]
         [HttpGet]
@@ -41,19 +48,22 @@ namespace AuthenticationAndAuthorization.Controllers
         }
         
         [HttpGet]
-        [Route("anonymous")]
-        [AllowAnonymous]
-        public IActionResult Anonymous()
-        {
-            return Ok("You are Anonymous");
-        }
-        
-        [HttpGet]
         [Route("tester")]
-        [Authorize(Roles = "tester")]
+        [Authorize(Roles = "tester,manager")]
         public IActionResult Tester()
         {
-            return Ok($"{User.Identity.Name}");
+            return Ok($"{User.Identity.Name}, you have access to this resource!");
         }
+
+        [HttpGet]
+        [Route("manager")]
+        [Authorize(Roles = "manager")]
+        public IActionResult Manager(){
+            
+            var usersInfo = UserRepository.GetAll(); 
+            if(usersInfo == null) return BadRequest();
+            return Ok(usersInfo);
+        }
+        
     }
 }
